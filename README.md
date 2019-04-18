@@ -11,6 +11,7 @@ Silakan jalankan instruksi dibawah ini satu per satu.
 3. Lakukan instalasi pustaka-pustaka yang dibutuhkan via terminal dengan perintah `npm install`
 4. Install pustaka [solidarity](https://github.com/infinitered/solidarity) dan plugin solidarity react-native dengan perintah `npm install -g solidarity solidarity-react-native`.
 5. Jalankan solidarity via terminal dengan perintah `solidarity`. Pastikan semua _checklist_ berhasil dan tidak ada pesan kesalahan.
+![](solidarity.png)
 6. Jalankan JavaScript engine via terminal dengan perintah `npm start`.
 7. Di terminal baru, jalankan perintah untuk menjalankan aplikasi mobile dengan perintah `react-native run-android`.
 8. Pastikan di _device_ atau _emulator_ muncul seperti gambar berikut.
