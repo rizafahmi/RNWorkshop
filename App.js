@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Image, Text, View } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
+import Detail from './screens/Detail.js';
 import styles from './styles.js';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +13,7 @@ export default class App extends Component {
         {
           id: 1,
           title: 'Ceritanya Developer Podcast',
-          url: 'https://ceritanyadeveloper.com',
+          url: 'http://ceritanyadeveloper.com/',
           image:
             'https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_episode400/405469/405469-1553491422931-ad8dd95fef5b.jpg'
         },
@@ -40,16 +42,29 @@ export default class App extends Component {
       <View style={styles.itemTextContainer}>
         <Text style={styles.itemText}>{podcast.title}</Text>
         <Text style={styles.itemUrl}>{podcast.url}</Text>
+        <Button
+          title="View Detail"
+          onPress={() =>
+            this.props.navigation.navigate('Detail', { podcast: podcast })
+          }
+        />
       </View>
     </View>
   );
+  static navigationOptions = {
+    title: '🚀 PodSpace',
+    headerStyle: {
+      backgroundColor: '#343A40'
+    },
+    headerTitleStyle: {
+      fontSize: 32,
+      color: '#fff'
+    }
+  };
   render() {
     const podcastList = this.state.podcasts.map(this.renderItem);
     return (
       <View style={styles.container}>
-        <View style={[styles.box, styles.headerContainer]}>
-          <Text style={styles.headerText}>HEADER</Text>
-        </View>
         <View style={[styles.box, styles.contentContainer]}>{podcastList}</View>
         <View style={[styles.box, styles.footerContainer]}>
           <Text style={styles.footer}>
@@ -60,3 +75,10 @@ export default class App extends Component {
     );
   }
 }
+
+const AppNav = createStackNavigator({
+  App: { screen: App },
+  Detail: { screen: Detail }
+});
+
+export default createAppContainer(AppNav);

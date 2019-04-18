@@ -8,19 +8,9 @@ export default StyleSheet.create({
   box: {
     flex: 1
   },
-  headerContainer: {
-    backgroundColor: '#343A40',
-    flex: 1,
-    alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 32,
-    color: '#fff'
-  },
   contentContainer: {
     backgroundColor: '#F7F8F9',
-    flex: 10,
-    marginTop: 22
+    flex: 10
   },
   footerContainer: {
     backgroundColor: '#6D757D',
