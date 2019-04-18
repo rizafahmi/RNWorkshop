@@ -64,20 +64,6 @@
         "plugin": "React Native",
         "name": "androidVersion"
       }
-    ],
-    "Xcode": [
-      {
-        "rule": "cli",
-        "binary": "xcodebuild",
-        "semver": "10.2",
-        "platform": "darwin"
-      },
-      {
-        "rule": "cli",
-        "binary": "xcrun",
-        "semver": "43.1",
-        "platform": "darwin"
-      }
     ]
   }
 }
