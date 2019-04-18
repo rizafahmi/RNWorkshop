@@ -3,39 +3,25 @@ import { Button, Image, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Detail from './screens/Detail.js';
+import { database } from './src/firebase.js';
 import styles from './styles.js';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      podcasts: [
-        {
-          id: 1,
-          title: 'Ceritanya Developer Podcast',
-          url: 'http://ceritanyadeveloper.com/',
-          image:
-            'https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_episode400/405469/405469-1553491422931-ad8dd95fef5b.jpg'
-        },
-        {
-          id: 2,
-          title: 'Dunia Dalam Design',
-          url: 'https://anchor.fm/duniadalamdesain',
-          image:
-            'https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded400/629479/629479-1532081312443-0775c88e065fc.jpg'
-        },
-        {
-          id: 3,
-          title: 'Ngobrolin Startup & Teknologi',
-          url: 'https://anchor.fm/ngobrolinstartup',
-          image:
-            'https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded400/1428780/1428780-1552434368252-f1fbc595b4474.jpg'
-        }
-      ]
+      podcasts: []
     };
   }
-  renderItem = (podcast) => (
-    <View key={podcast.id} style={styles.itemContainer}>
+  componentDidMount() {
+    database.ref('/podcasts').on('value', (snapshot) => {
+      this.setState({
+        podcasts: snapshot.val()
+      });
+    });
+  }
+  renderItem = (podcast, index) => (
+    <View key={index} style={styles.itemContainer}>
       <View style={styles.itemImageContainer}>
         <Image style={styles.itemImage} source={{ uri: podcast.image }} />
       </View>
