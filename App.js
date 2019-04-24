@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Image, Text, View, FlatList } from 'react-native';
+import { Alert, Button, Image, Text, View, FlatList } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Detail from './screens/Detail.js';
@@ -32,6 +32,15 @@ class App extends Component {
       });
     });
   }
+  deleteConfirmation = (id) => {
+    Alert.alert('Delete?', 'Are you sure to delete?', [
+      { text: 'Yeah', onPress: () => this.deletePodcast(id) },
+      { text: 'Hell No!' }
+    ]);
+  };
+  deletePodcast = (id) => {
+    database.ref(`/podcasts/${id}`).remove();
+  };
   renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <View style={styles.itemImageContainer}>
@@ -54,7 +63,11 @@ class App extends Component {
             this.props.navigation.navigate('EditPodcast', { podcast: item })
           }
         />
-        <Button title="Delete" color="#f75676" />
+        <Button
+          title="Delete"
+          color="#f75676"
+          onPress={() => this.deleteConfirmation(item.id)}
+        />
       </View>
     </View>
   );
