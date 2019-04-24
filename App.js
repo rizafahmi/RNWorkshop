@@ -4,6 +4,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Detail from './screens/Detail.js';
 import AddPodcast from './screens/AddPodcast.js';
+import EditPodcast from './screens/EditPodcast.js';
 import { database } from './src/firebase.js';
 import styles from './styles.js';
 
@@ -40,12 +41,20 @@ class App extends Component {
         <Text style={styles.itemText}>{item.title}</Text>
         <Text style={styles.itemUrl}>{item.url}</Text>
         <Button
-          title="View Detail"
+          title="Detail"
           color="#54c7ec"
           onPress={() =>
             this.props.navigation.navigate('Detail', { podcast: item })
           }
         />
+        <Button
+          title="Edit"
+          color="#ffdd57"
+          onPress={() =>
+            this.props.navigation.navigate('EditPodcast', { podcast: item })
+          }
+        />
+        <Button title="Delete" color="#f75676" />
       </View>
     </View>
   );
@@ -89,7 +98,8 @@ class App extends Component {
 const AppNav = createStackNavigator({
   App: { screen: App },
   Detail: { screen: Detail },
-  AddPodcast: { screen: AddPodcast }
+  AddPodcast: { screen: AddPodcast },
+  EditPodcast: { screen: EditPodcast }
 });
 
 export default createAppContainer(AppNav);

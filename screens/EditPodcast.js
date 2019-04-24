@@ -1,39 +1,37 @@
 import React from 'react';
-import { Text, TextInput, Button, View } from 'react-native';
+import { Button, View, Text, TextInput } from 'react-native';
 
 import { database } from '../src/firebase.js';
 import styles from './styles.js';
 
-class AddPodcast extends React.Component {
-  static navigationOptions = {
-    title: '🚀 PodSpace',
-    headerStyle: {
-      backgroundColor: '#343A40'
-    },
-    headerTitleStyle: {
-      fontSize: 32,
-      color: '#fff'
-    }
-  };
+class EditPodcast extends React.Component {
   constructor(props) {
     super(props);
+    const { title, url, image, id } = this.props.navigation.getParam('podcast');
     this.state = {
-      title: '',
-      image: '',
-      url: ''
+      title,
+      url,
+      image,
+      id
     };
   }
   changeTitle = (text) => {
-    this.setState({ title: text });
+    this.setState({
+      title: text
+    });
   };
   changeImage = (text) => {
-    this.setState({ image: text });
+    this.setState({
+      image: text
+    });
   };
   changeUrl = (text) => {
-    this.setState({ url: text });
+    this.setState({
+      url: text
+    });
   };
-  submitPodcast = () => {
-    database.ref('/podcasts').push(this.state);
+  editPodcast = () => {
+    database.ref(`/podcasts/${this.state.id}`).update(this.state);
     this.props.navigation.pop();
   };
   render() {
@@ -60,10 +58,10 @@ class AddPodcast extends React.Component {
           value={this.state.url}
           onChangeText={this.changeUrl}
         />
-        <Button color="#4fd69c" title="Save" onPress={this.submitPodcast} />
+        <Button color="#4fd69c" title="Save" onPress={this.editPodcast} />
       </View>
     );
   }
 }
 
-export default AddPodcast;
+export default EditPodcast;
