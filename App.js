@@ -3,6 +3,7 @@ import { Button, Image, Text, View, FlatList } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Detail from './screens/Detail.js';
+import AddPodcast from './screens/AddPodcast.js';
 import { database } from './src/firebase.js';
 import styles from './styles.js';
 
@@ -40,6 +41,7 @@ class App extends Component {
         <Text style={styles.itemUrl}>{item.url}</Text>
         <Button
           title="View Detail"
+          color="#54c7ec"
           onPress={() =>
             this.props.navigation.navigate('Detail', { podcast: item })
           }
@@ -48,9 +50,12 @@ class App extends Component {
     </View>
   );
   render() {
-    const podcasts =
+    let podcasts =
       this.state.podcasts !== null &&
-      this.state.podcasts.filter((podcast) => podcast !== null);
+      Object.entries(this.state.podcasts).map((podcast) => ({
+        ...podcast[1],
+        id: podcast[0]
+      }));
     return (
       <View style={styles.container}>
         <View style={[styles.box, styles.contentContainer]}>
@@ -64,6 +69,13 @@ class App extends Component {
             <Text>Loading...</Text>
           )}
         </View>
+        <View style={[styles.box, styles.menuContainer]}>
+          <Button
+            title="Add Podcast"
+            color="#4fd69c"
+            onPress={() => this.props.navigation.navigate('AddPodcast')}
+          />
+        </View>
         <View style={[styles.box, styles.footerContainer]}>
           <Text style={styles.footer}>
             &copy; 2019 RN Workshop. All right reserved.
@@ -76,7 +88,8 @@ class App extends Component {
 
 const AppNav = createStackNavigator({
   App: { screen: App },
-  Detail: { screen: Detail }
+  Detail: { screen: Detail },
+  AddPodcast: { screen: AddPodcast }
 });
 
 export default createAppContainer(AppNav);

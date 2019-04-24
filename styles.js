@@ -12,8 +12,13 @@ export default StyleSheet.create({
     backgroundColor: '#F7F8F9',
     flex: 10
   },
+  menuContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#6D757D'
+  },
   footerContainer: {
-    backgroundColor: '#6D757D',
+    backgroundColor: '#343A40',
     flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center'

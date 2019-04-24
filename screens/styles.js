@@ -4,6 +4,12 @@ export default StyleSheet.create({
   container: {
     flex: 1
   },
+  formContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    margin: 20
+  },
+  textInput: { height: 40, borderColor: '#F7F8F9', borderWidth: 1 },
   webView: {
     flex: 10
   },
