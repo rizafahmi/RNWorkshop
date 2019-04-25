@@ -5,6 +5,27 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },
+  headerContainer: {
+    backgroundColor: '#343A40',
+    flex: 1,
+    alignItems: 'center'
+  },
+  headerText: {
+    fontSize: 24,
+    color: '#fff'
+  },
+  infoContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: '#6C757C',
+    paddingRight: 6,
+    flexDirection: 'row'
+  },
+  infoText: {
+    paddingRight: 6,
+    color: '#fff'
+  },
   box: {
     flex: 1
   },

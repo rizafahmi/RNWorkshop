@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
 import { Alert, Button, Image, Text, View, FlatList } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
 import Detail from './screens/Detail.js';
 import AddPodcast from './screens/AddPodcast.js';
 import EditPodcast from './screens/EditPodcast.js';
-import { database } from './src/firebase.js';
+import Login from './screens/Login.js';
+import SignIn from './screens/SignIn.js';
+import Loading from './screens/Loading.js';
+import { auth, database } from './src/firebase.js';
 import styles from './styles.js';
 
 class App extends Component {
-  static navigationOptions = {
-    title: '🚀 PodSpace',
-    headerStyle: {
-      backgroundColor: '#343A40'
-    },
-    headerTitleStyle: {
-      fontSize: 32,
-      color: '#fff'
-    }
-  };
   constructor(props) {
     super(props);
     this.state = {
-      podcasts: null
+      podcasts: null,
+      currentUser: null
     };
   }
   componentDidMount() {
@@ -31,6 +25,8 @@ class App extends Component {
         podcasts: snapshot.val()
       });
     });
+    const { currentUser } = auth;
+    this.setState({ currentUser: currentUser.email });
   }
   deleteConfirmation = (id) => {
     Alert.alert('Delete?', 'Are you sure to delete?', [
@@ -71,6 +67,10 @@ class App extends Component {
       </View>
     </View>
   );
+  logout = async () => {
+    await auth.signOut();
+    this.props.navigation.navigate('Login');
+  };
   render() {
     let podcasts =
       this.state.podcasts !== null &&
@@ -80,6 +80,13 @@ class App extends Component {
       }));
     return (
       <View style={styles.container}>
+        <View style={[styles.box, styles.headerContainer]}>
+          <Text style={styles.headerText}>🚀 Podspace</Text>
+        </View>
+        <View style={[styles.box, styles.infoContainer]}>
+          <Text style={styles.infoText}>Welcome, {this.state.currentUser}</Text>
+          <Button title="Logout" color="#f75676" onPress={this.logout} />
+        </View>
         <View style={[styles.box, styles.contentContainer]}>
           {podcasts.length > 0 ? (
             <FlatList
@@ -108,11 +115,19 @@ class App extends Component {
   }
 }
 
-const AppNav = createStackNavigator({
-  App: { screen: App },
-  Detail: { screen: Detail },
-  AddPodcast: { screen: AddPodcast },
-  EditPodcast: { screen: EditPodcast }
-});
+const AppNav = createSwitchNavigator(
+  {
+    App,
+    Detail,
+    AddPodcast,
+    EditPodcast,
+    Login,
+    SignIn,
+    Loading
+  },
+  {
+    initialRouteName: 'Loading'
+  }
+);
 
 export default createAppContainer(AppNav);
